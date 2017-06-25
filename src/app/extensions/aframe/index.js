@@ -1,0 +1,1 @@
+import './gpu-particle-system';
