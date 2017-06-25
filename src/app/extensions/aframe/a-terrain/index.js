@@ -1,2 +1,2 @@
-import './geometry'
-import './primitive'
+import './geometry';
+import './primitive';

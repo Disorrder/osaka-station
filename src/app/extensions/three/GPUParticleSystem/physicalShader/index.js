@@ -9,6 +9,7 @@ var defaultOptions = {
     defines: {
         HAS_PERSPECTIVE: true,
         PERSPECTIVE_DPU: 300.0,
+        EASE_IN: 0.3,
     },
     blending: THREE.AdditiveBlending,
     vertexShader: require('./vertex.glsl'),
@@ -18,12 +19,6 @@ var defaultOptions = {
 export default class extends THREE.ShaderMaterial {
     constructor(options, uniforms = {}) {
         options = Object.assign({}, defaultOptions, options);
-
-        // for (let k in options.uniforms) { //? map uniforms
-        //     let v = uniforms[k];
-        //     if (v) options.uniforms[k].value = v;
-        // }
-
         super(options);
     }
 }

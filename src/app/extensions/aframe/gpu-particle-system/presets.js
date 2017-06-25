@@ -5,7 +5,7 @@ presets.default = {
     maxParticles: 1e3,
     spawnRate: 30, // particles per sec
     // texture: 'https://threejs.org/examples/textures/particle2.png',
-    texture: require('assets/textures/explosion_map.png'),
+    texture: require('assets/textures/particle.png'),
     perspective: true,
 
     position: new THREE.Vector3(),

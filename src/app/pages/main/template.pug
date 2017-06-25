@@ -16,12 +16,14 @@ block scene
         //- a-entity.sky_weather.particle-snow(position="0 0 0" gpu-particle-system="preset: snow; maxParticles: 500; spawnRate: 50; texture: #tex-particle-1;")
 
     a-entity#world
-        a-box(position="1 1 -2")
+        a-box(position="-10 0.5 -20")
+        a-terrain(width="20" height="20")
+        a-entity#waterfall(position="0 0 -10")
+            a-entity(position="0 5 0" geometry="primitive: box; width: 10; height: 0.1;" waterfall-controller="")
 
 
-    //- global objects
-    a-entity#playerBox(position="0 0 0" rotation="0 0 0")
-        a-camera#player(wasd-controls="acceleration: 650;" fov="75")
+    a-entity#playerBox
+        a-camera#player(wasd-controls="acceleration: 65;" fov="75")
             //- a-sound#bg_sound(src="#audio-bg-1" volume="0" autoplay="false")
             //- a-entity#sound
             a-entity(position="0 0 -2")

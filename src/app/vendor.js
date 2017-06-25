@@ -6,7 +6,6 @@
 import $ from 'jquery';
 import _ from 'lodash';
 import AFRAME from 'aframe';
-// import 'aframe-look-at-component';
 
 window.$ = window.jQuery = $;
 window._ = _;

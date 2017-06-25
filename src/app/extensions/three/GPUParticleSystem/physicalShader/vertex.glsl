@@ -14,8 +14,6 @@ attribute float particleLifetime;
 varying vec4 vColor;
 float lifeLeft;
 
-#define EASE_IN 0.3
-
 void main() {
     vColor = particleColor;
 
@@ -44,10 +42,12 @@ void main() {
         float perspective = 1.0;
     #endif
 
-    if (currentTime < EASE_IN) { // appear easing
-        perspective *= currentTime / EASE_IN;
-        // vColor.a *= currentTime / EASE_IN;
-    }
+    #ifdef EASE_IN
+        if (currentTime < EASE_IN) { // appear easing
+            perspective *= currentTime / EASE_IN;
+            // vColor.a *= currentTime / EASE_IN;
+        }
+    #endif
 
     gl_PointSize = perspective * pointSize;
     // gl_PointSize = 0;

@@ -120,8 +120,8 @@ module.exports = {
             filename: 'index.html',
             template: 'app/pages/main/template.pug',
             inject: 'head',
-            chunks: ['vendor', 'main'],
-            chunksSortMode: chunksSortOrder(['vendor', 'main']),
+            chunks: ['vendor', 'app'],
+            chunksSortMode: chunksSortOrder(['vendor', 'app']),
         }),
 
         // new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js'),
