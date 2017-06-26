@@ -1,1 +1,3 @@
-import './pages/main/entry.js';
+import './vendor.js';
+
+import './pages/main';

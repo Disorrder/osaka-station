@@ -5,7 +5,6 @@ const webpack = require('webpack');
 
 var cfg = require('./buildconfig.json');
 const npm = require('./package.json');
-const bower = require('./bower.json');
 const pug = require('pug');
 
 const WebpackNotifierPlugin = require('webpack-notifier');
@@ -13,7 +12,7 @@ const CleanWebpackPlugin  = require('clean-webpack-plugin');
 const CopyWebpackPlugin   = require('copy-webpack-plugin');
 const HtmlWebpackPlugin   = require('html-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
-// const BowerWebpackPlugin = require("bower-webpack-plugin");
+const SplitByPathPlugin = require('webpack-split-by-path');
 
 function chunksSortOrder(chunks) {
     return function(a, b) {
@@ -39,13 +38,11 @@ var flags = {
 }
 
 console.log('Builder is running in', process.env.NODE_ENV, 'mode.');
-// console.log('Flags:', flags);
 
 module.exports = {
     context: path.resolve(cfg.path.app),
     watch: flags.watch,
     entry: {
-        vendor: `app/vendor.js`,
         app: `app/app.entry.js`,
     },
     output: {
@@ -76,6 +73,9 @@ module.exports = {
         // Tell webpack to look for required files in bower and node
         // modulesDirectories: ['../bower_components', '../node_modules'],
         // extensions: ['', '.js', '.coffee', '.json']
+        alias: {
+            vue: 'vue/dist/vue.js'
+        }
     },
     // resolveLoader: {
     //     root: path.resolve('./node_modules'),
@@ -111,16 +111,10 @@ module.exports = {
             debug: true
         }),
 
-        // new HtmlWebpackPlugin({
-        //     filename: 'index.html',
-        //     template: 'index.pug',
-        //     inject: 'head'
-        // }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: 'app/pages/main/template.pug',
+            template: 'index.pug',
             inject: 'head',
-            chunks: ['vendor', 'app'],
             chunksSortMode: chunksSortOrder(['vendor', 'app']),
         }),
 
@@ -136,18 +130,18 @@ module.exports = {
         new CopyWebpackPlugin([
             { from: 'config.js' },
             { from: 'favicon.*' },
-            { from: 'assets/', to: 'assets/' },
+            // { from: 'assets/', to: 'assets/' },
         ]),
 
-        // new SplitByPathPlugin([
-        //     {
-        //         name: 'vendor',
-        //         path: [
-        //             path.resolve('./node_modules'),
-        //             path.resolve('./bower_components')
-        //         ]
-        //     }
-        // ]),
+        new SplitByPathPlugin([
+            {
+                name: 'vendor',
+                path: [
+                    path.resolve('./node_modules'),
+                    path.resolve('./bower_components')
+                ]
+            }
+        ]),
 
         new webpack.ProvidePlugin({
            $: 'jquery',
