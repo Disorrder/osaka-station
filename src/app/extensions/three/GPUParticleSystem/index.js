@@ -25,8 +25,8 @@ var position = new THREE.Vector3();
 var positionSpread = new THREE.Vector3();
 var velocity = new THREE.Vector3();
 var velocitySpread = new THREE.Vector3();
-var acceleration = new THREE.Vector3(); // not implemented
-var accelerationSpread = new THREE.Vector3(); // not implemented
+var acceleration = new THREE.Vector3();
+var accelerationSpread = new THREE.Vector3();
 var color = new THREE.Color();
 var colorSpread = 1.0;
 var opacity = 1.0;
@@ -43,7 +43,6 @@ export default class GPUParticleSystem extends THREE.Object3D {
 
         this.DPR = window.devicePixelRatio || 1;
         if (this.DPR === 4) this.DPR = 1; // SGS7 issue
-        this.DPR = Math.sqrt(this.DPR);
 
         this.maxParticles = options.maxParticles || 1e5;
         this.particleNoiseTex = options.particleNoiseTex;
@@ -54,8 +53,8 @@ export default class GPUParticleSystem extends THREE.Object3D {
             positionSpread: new THREE.Vector3(),
             velocity: new THREE.Vector3(),
             velocitySpread: new THREE.Vector3(),
-            acceleration: new THREE.Vector3(), // not implemented
-            accelerationSpread: new THREE.Vector3(), // not implemented
+            acceleration: new THREE.Vector3(),
+            accelerationSpread: new THREE.Vector3(),
             color: 0xffffff,
             colorSpread: 1.,
             opacity: 1.,
@@ -66,7 +65,6 @@ export default class GPUParticleSystem extends THREE.Object3D {
             smoothPosition: false,
         };
         Object.assign(this.particleOptions, particleOptions);
-
 
         this.PARTICLE_CURSOR = this.particleCursor = 0;
         this.time = 0; // in seconds
@@ -151,6 +149,7 @@ export default class GPUParticleSystem extends THREE.Object3D {
         attr.array[i * 4 + 1] = color.g;
         attr.array[i * 4 + 2] = color.b;
         attr.array[i * 4 + 3] = opacity;
+        // console.log('pColor', color, opacity);
 
         attr = this.geometry.getAttribute('particleSize');
         attr.array[i * 1 + 0] = size;
@@ -198,6 +197,5 @@ export default class GPUParticleSystem extends THREE.Object3D {
         }
     }
 }
-
 
 // THREE.GPUParticleSystem = GPUParticleSystem;
