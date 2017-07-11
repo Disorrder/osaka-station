@@ -8,8 +8,6 @@ export default class Controller {
         } else {
             this.scene.addEventListener('loaded', this.onStart.bind(this));
         }
-
-        window.ctrl = this;
     }
 
     onStart() {

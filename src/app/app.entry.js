@@ -1,3 +1,7 @@
 import './vendor.js';
 
-import './pages/main';
+// --- app ---
+export default angular.module('app',  [
+    require('@uirouter/angularjs').default,
+    require('./pages').default.name
+]);

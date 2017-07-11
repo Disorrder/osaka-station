@@ -33,8 +33,10 @@
     "webpack-split-by-path": "2.0.0"
   },
   "dependencies": {
+    "@uirouter/angularjs": "^1.0.5",
     "aframe": "^0.6.0",
     "aframe-look-at-component": "^0.5.1",
+    "angular": "^1.6.5",
     "animejs": "git+https://github.com/Disorrder/anime.git#Disorrder-patch-1",
     "jquery": "^3.2.1",
     "lodash": "^4.17.4"

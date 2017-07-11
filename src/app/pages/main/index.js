@@ -1,8 +1,13 @@
 import 'app/extensions/three';
 import 'app/extensions/aframe';
-import SceneController from './scene.controller';
 import './waterfall-controller.js';
 
-$(() => {
-    var scene = new SceneController();
-});
+export default angular.module('page.main', []).config(['$stateProvider', ($stateProvider) => {
+    console.log('cfg');
+    $stateProvider.state('main', {
+        url: '',
+        controller: require('./controller').default,
+        controllerAs: 'page',
+        template: require('./template.pug')(),
+    });
+}]);
