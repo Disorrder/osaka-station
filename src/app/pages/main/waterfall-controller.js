@@ -14,7 +14,7 @@ AFRAME.registerComponent('waterfall-controller', {
             colorSpread: 0.2,
             opacity: 1,
             lifetime: 1,
-            size: 1,
+            size: 0.3,
             sizeSpread: 0
         };
 
@@ -36,22 +36,42 @@ AFRAME.registerComponent('waterfall-controller', {
 
         // generate raws
         this.imageData = [];
-        // for (let i = )
+        let rows = 60;
+        let cols = this.waterfall.spawners;
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col ++) {
+                let i = row * cols + col;
+                this.imageData[i] = ((i / 10) % 2 < 1) ? 0.8 : 0;
+                // if (row / 20 % 2 > 1) this.imageData[i] = 0;
+            }
+        }
 
+        this.spawnRate = 90;
+        this.spawnTime = 1 / this.spawnRate;
+        this.imgReadingSpeed = 20; // vertical pixels per sec
+        this.imgCurrentRow = rows;
+
+        this.debugArr = [];
+
+        // console.log(this.imageData);
         this.el.setObject3D('particle-system', this.particleSystem);
     },
 
     tick(time, dt) { // flow
         time /= 1000; dt /= 1000;
+        if (time > 2 && time < 2.2) console.log(this.debugArr)
+        if (time > 2) return;
         if (!this._spawnLastTime) return this._spawnLastTime = time;
+        this._spawnDt = time - this._spawnLastTime;
 
-        // this._spawnDt = time - this._spawnLastTime;
-
-        this.particleOptions.position.x = _.random(-5/2, 5/2, true);
-        this.particleSystem.spawnParticle(this.particleOptions);
-        // for ( this._spawnLastTime; this._spawnLastTime <= time-this._spawnTimeInterval; this._spawnLastTime += this._spawnTimeInterval ) {
-        //     console.log(this.particleOptions);
-        // }
+        for (this._spawnDt -= this.spawnTime; this._spawnDt >= 0; this._spawnDt -= this.spawnTime) {
+            // this.particleOptions.position.x = _.random(-5/2, 5/2, true);
+            this.particleOptions.time = time - this._spawnDt;
+            this.particleSystem.spawnParticle(this.particleOptions);
+            this._spawnLastTime = this.particleOptions.time;
+            // console.log(time, this.particleOptions.time);
+            this.debugArr.push({time, spawnAt: this.particleOptions.time})
+        }
 
         this.particleSystem.update(time);
     }
